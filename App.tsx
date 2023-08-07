@@ -12,7 +12,11 @@ export default function App() {
       { text: enterGoalText, id: Math.random().toString() },
     ]);
   };
-
+  const deleteGoalHandler = (id: string) => {
+    setCourseGoals((prev: []) => {
+      return prev.filter((item: { id: string }) => item.id !== id);
+    });
+  };
   return (
     <View style={styles.appContainer}>
       <GoalInput onAddGoal={addGoalHandler} />
@@ -23,7 +27,13 @@ export default function App() {
             return item.id;
           }}
           renderItem={(itemData: any) => {
-            return <GoalItem text={itemData.item.text} />;
+            return (
+              <GoalItem
+                text={itemData.item.text}
+                id={itemData.item.id}
+                onDeleteItem={deleteGoalHandler}
+              />
+            );
           }}
           alwaysBounceVertical={false}
         />
